@@ -1,0 +1,202 @@
+{
+  "benchmark_name": "CQCB",
+  "dataset_name": "anes_2020",
+  "constraints": [
+    {
+      "constraint_id": "pol_001",
+      "question_pair": [
+        "party_id",
+        "presidential_vote"
+      ],
+      "constraint_type": "logical",
+      "constraint_rule": "Party identification should be consistent with presidential vote choice",
+      "expected_consistency": 0.85,
+      "domain": "political"
+    },
+    {
+      "constraint_id": "pol_002",
+      "question_pair": [
+        "party_id",
+        "country_direction"
+      ],
+      "constraint_type": "semantic",
+      "constraint_rule": "Party identification should correlate with country direction assessment",
+      "expected_consistency": 0.75,
+      "domain": "political"
+    },
+    {
+      "constraint_id": "pol_003",
+      "question_pair": [
+        "economy_rating",
+        "country_direction"
+      ],
+      "constraint_type": "logical",
+      "constraint_rule": "Economic rating should be consistent with country direction assessment",
+      "expected_consistency": 0.8,
+      "domain": "political"
+    },
+    {
+      "constraint_id": "soc_001",
+      "question_pair": [
+        "education",
+        "income"
+      ],
+      "constraint_type": "value-based",
+      "constraint_rule": "Education level should correlate with income level",
+      "expected_consistency": 0.7,
+      "domain": "social"
+    },
+    {
+      "constraint_id": "soc_002",
+      "question_pair": [
+        "age_group",
+        "party_id"
+      ],
+      "constraint_type": "semantic",
+      "constraint_rule": "Age group should show expected correlation with party identification",
+      "expected_consistency": 0.65,
+      "domain": "social"
+    },
+    {
+      "constraint_id": "trust_001",
+      "question_pair": [
+        "party_id",
+        "trust_government"
+      ],
+      "constraint_type": "logical",
+      "constraint_rule": "Party identification should correlate with government trust",
+      "expected_consistency": 0.75,
+      "domain": "political"
+    }
+  ],
+  "instances": [
+    {
+      "instance_id": "CQCB_0000",
+      "respondent_id": "ANES_00001",
+      "responses": {
+        "presidential_vote": "Trump",
+        "party_id": "Republican",
+        "economy_rating": "Worse",
+        "country_direction": "Wrong",
+        "trust_government": "Distrust"
+      },
+      "metadata": {
+        "source_dataset": "anes_2020",
+        "original_index": 0,
+        "constraint_count": 6
+      }
+    },
+    {
+      "instance_id": "CQCB_0001",
+      "respondent_id": "ANES_00005",
+      "responses": {
+        "presidential_vote": "No Vote",
+        "party_id": "Republican",
+        "economy_rating": "Same",
+        "country_direction": "Wrong",
+        "trust_government": "Neutral"
+      },
+      "metadata": {
+        "source_dataset": "anes_2020",
+        "original_index": 1,
+        "constraint_count": 6
+      }
+    },
+    {
+      "instance_id": "CQCB_0002",
+      "respondent_id": "ANES_00000",
+      "responses": {
+        "presidential_vote": "Biden",
+        "party_id": "Democrat",
+        "economy_rating": "Better",
+        "country_direction": "Right",
+        "trust_government": "Trust"
+      },
+      "metadata": {
+        "source_dataset": "anes_2020",
+        "original_index": 2,
+        "constraint_count": 6
+      }
+    },
+    {
+      "instance_id": "CQCB_0003",
+      "respondent_id": "ANES_00007",
+      "responses": {
+        "presidential_vote": "Trump",
+        "party_id": "Other",
+        "economy_rating": "Worse",
+        "country_direction": "Wrong",
+        "trust_government": "Distrust"
+      },
+      "metadata": {
+        "source_dataset": "anes_2020",
+        "original_index": 3,
+        "constraint_count": 6
+      }
+    },
+    {
+      "instance_id": "CQCB_0004",
+      "respondent_id": "ANES_00002",
+      "responses": {
+        "presidential_vote": "Biden",
+        "party_id": "Independent",
+        "economy_rating": "Same",
+        "country_direction": "Right",
+        "trust_government": "Neutral"
+      },
+      "metadata": {
+        "source_dataset": "anes_2020",
+        "original_index": 4,
+        "constraint_count": 6
+      }
+    },
+    {
+      "instance_id": "CQCB_0005",
+      "respondent_id": "ANES_00004",
+      "responses": {
+        "presidential_vote": "Other",
+        "party_id": "Democrat",
+        "economy_rating": "Worse",
+        "country_direction": "Right",
+        "trust_government": "Distrust"
+      },
+      "metadata": {
+        "source_dataset": "anes_2020",
+        "original_index": 5,
+        "constraint_count": 6
+      }
+    },
+    {
+      "instance_id": "CQCB_0006",
+      "respondent_id": "ANES_00003",
+      "responses": {
+        "presidential_vote": "Trump",
+        "party_id": "Other",
+        "economy_rating": "Better",
+        "country_direction": "Wrong",
+        "trust_government": "Trust"
+      },
+      "metadata": {
+        "source_dataset": "anes_2020",
+        "original_index": 6,
+        "constraint_count": 6
+      }
+    },
+    {
+      "instance_id": "CQCB_0007",
+      "respondent_id": "ANES_00006",
+      "responses": {
+        "presidential_vote": "Biden",
+        "party_id": "Independent",
+        "economy_rating": "Better",
+        "country_direction": "Right",
+        "trust_government": "Trust"
+      },
+      "metadata": {
+        "source_dataset": "anes_2020",
+        "original_index": 7,
+        "constraint_count": 6
+      }
+    }
+  ]
+}

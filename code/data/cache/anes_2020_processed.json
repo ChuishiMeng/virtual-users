@@ -1,0 +1,280 @@
+{
+  "name": "ANES 2020",
+  "domain": "政治态度",
+  "responses": [
+    {
+      "respondent_id": "ANES_00000",
+      "demographics": {
+        "age_group": "18-29",
+        "gender": "Male",
+        "race": "White",
+        "education": "HS",
+        "income": "<30k",
+        "region": "Northeast"
+      },
+      "responses": {
+        "presidential_vote": "Biden",
+        "party_id": "Democrat",
+        "economy_rating": "Better",
+        "country_direction": "Right",
+        "trust_government": "Trust"
+      }
+    },
+    {
+      "respondent_id": "ANES_00001",
+      "demographics": {
+        "age_group": "30-44",
+        "gender": "Female",
+        "race": "Black",
+        "education": "Some College",
+        "income": "30k-60k",
+        "region": "Midwest"
+      },
+      "responses": {
+        "presidential_vote": "Trump",
+        "party_id": "Republican",
+        "economy_rating": "Worse",
+        "country_direction": "Wrong",
+        "trust_government": "Distrust"
+      }
+    },
+    {
+      "respondent_id": "ANES_00002",
+      "demographics": {
+        "age_group": "45-59",
+        "gender": "Male",
+        "race": "Hispanic",
+        "education": "Bachelor",
+        "income": "60k-100k",
+        "region": "South"
+      },
+      "responses": {
+        "presidential_vote": "Biden",
+        "party_id": "Independent",
+        "economy_rating": "Same",
+        "country_direction": "Right",
+        "trust_government": "Neutral"
+      }
+    },
+    {
+      "respondent_id": "ANES_00003",
+      "demographics": {
+        "age_group": "60+",
+        "gender": "Female",
+        "race": "Asian",
+        "education": "Graduate",
+        "income": ">100k",
+        "region": "West"
+      },
+      "responses": {
+        "presidential_vote": "Trump",
+        "party_id": "Other",
+        "economy_rating": "Better",
+        "country_direction": "Wrong",
+        "trust_government": "Trust"
+      }
+    },
+    {
+      "respondent_id": "ANES_00004",
+      "demographics": {
+        "age_group": "18-29",
+        "gender": "Female",
+        "race": "White",
+        "education": "HS",
+        "income": "<30k",
+        "region": "Northeast"
+      },
+      "responses": {
+        "presidential_vote": "Other",
+        "party_id": "Democrat",
+        "economy_rating": "Worse",
+        "country_direction": "Right",
+        "trust_government": "Distrust"
+      }
+    },
+    {
+      "respondent_id": "ANES_00005",
+      "demographics": {
+        "age_group": "30-44",
+        "gender": "Male",
+        "race": "Black",
+        "education": "Some College",
+        "income": "30k-60k",
+        "region": "Midwest"
+      },
+      "responses": {
+        "presidential_vote": "No Vote",
+        "party_id": "Republican",
+        "economy_rating": "Same",
+        "country_direction": "Wrong",
+        "trust_government": "Neutral"
+      }
+    },
+    {
+      "respondent_id": "ANES_00006",
+      "demographics": {
+        "age_group": "45-59",
+        "gender": "Female",
+        "race": "Hispanic",
+        "education": "Bachelor",
+        "income": "60k-100k",
+        "region": "South"
+      },
+      "responses": {
+        "presidential_vote": "Biden",
+        "party_id": "Independent",
+        "economy_rating": "Better",
+        "country_direction": "Right",
+        "trust_government": "Trust"
+      }
+    },
+    {
+      "respondent_id": "ANES_00007",
+      "demographics": {
+        "age_group": "60+",
+        "gender": "Male",
+        "race": "Asian",
+        "education": "Graduate",
+        "income": ">100k",
+        "region": "West"
+      },
+      "responses": {
+        "presidential_vote": "Trump",
+        "party_id": "Other",
+        "economy_rating": "Worse",
+        "country_direction": "Wrong",
+        "trust_government": "Distrust"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "age_group",
+      "text": "Age group",
+      "question_type": "single_choice",
+      "options": [
+        "18-29",
+        "30-44",
+        "45-59",
+        "60+"
+      ],
+      "demographic": true
+    },
+    {
+      "id": "gender",
+      "text": "Gender",
+      "question_type": "single_choice",
+      "options": [
+        "Male",
+        "Female",
+        "Other"
+      ],
+      "demographic": true
+    },
+    {
+      "id": "race",
+      "text": "Race/Ethnicity",
+      "question_type": "single_choice",
+      "options": [
+        "White",
+        "Black",
+        "Hispanic",
+        "Asian",
+        "Other"
+      ],
+      "demographic": true
+    },
+    {
+      "id": "education",
+      "text": "Education level",
+      "question_type": "single_choice",
+      "options": [
+        "HS",
+        "Some College",
+        "Bachelor",
+        "Graduate"
+      ],
+      "demographic": true
+    },
+    {
+      "id": "income",
+      "text": "Household income",
+      "question_type": "single_choice",
+      "options": [
+        "<30k",
+        "30k-60k",
+        "60k-100k",
+        ">100k"
+      ],
+      "demographic": true
+    },
+    {
+      "id": "region",
+      "text": "Region",
+      "question_type": "single_choice",
+      "options": [
+        "Northeast",
+        "Midwest",
+        "South",
+        "West"
+      ],
+      "demographic": true
+    },
+    {
+      "id": "presidential_vote",
+      "text": "Who did you vote for President?",
+      "question_type": "single_choice",
+      "options": [
+        "Biden",
+        "Trump",
+        "Other",
+        "No Vote"
+      ]
+    },
+    {
+      "id": "party_id",
+      "text": "Which party do you identify with?",
+      "question_type": "single_choice",
+      "options": [
+        "Democrat",
+        "Republican",
+        "Independent",
+        "Other"
+      ]
+    },
+    {
+      "id": "economy_rating",
+      "text": "How would you rate the economy?",
+      "question_type": "single_choice",
+      "options": [
+        "Better",
+        "Worse",
+        "Same"
+      ]
+    },
+    {
+      "id": "country_direction",
+      "text": "Is the country heading in the right direction?",
+      "question_type": "single_choice",
+      "options": [
+        "Right",
+        "Wrong"
+      ]
+    },
+    {
+      "id": "trust_government",
+      "text": "Do you trust the government?",
+      "question_type": "single_choice",
+      "options": [
+        "Trust",
+        "Distrust",
+        "Neutral"
+      ]
+    }
+  ],
+  "metadata": {
+    "source": "ANES 2020 Time Series",
+    "n_respondents": 0,
+    "year": 2020
+  }
+}

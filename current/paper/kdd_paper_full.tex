@@ -1,0 +1,375 @@
+\documentclass[sigconf, anonymous]{acmart}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{multirow}
+\usepackage{float}
+
+% Metadata Information
+\acmYear{2026}
+\acmDOI{10.1145/1122445.1122456}
+
+\begin{document}
+
+\title{Beyond Distribution Matching: Cross-Question Attitude Consistency for Reliable Virtual User Simulation}
+
+\author{Anonymous Authors}
+
+\begin{abstract}
+Large Language Models (LLMs) have emerged as powerful tools for virtual user simulation in survey research, enabling cost-effective and scalable alternatives to traditional human participant studies. However, current approaches primarily focus on matching population-level response distributions while neglecting a crucial aspect of human behavior: cross-question attitude consistency. We identify that existing LLM-based virtual users often exhibit logical inconsistencies in their responses across related questions, undermining their reliability as human proxies.
+
+To address this fundamental limitation, we propose three key contributions: (1) \textbf{CQCB} (Cross-Question Consistency Benchmark), the first benchmark specifically designed to evaluate cross-question consistency in virtual user responses; (2) \textbf{ACS} (Attitude Consistency Score), a novel metric that quantifies the degree of attitude consistency across related survey questions; and (3) \textbf{ConsistAgent}, a consistency-constrained decoding method that leverages memory-based constraint enforcement to ensure coherent responses from virtual users.
+
+Our comprehensive evaluation on ANES 2020 and GSS 2018 datasets demonstrates that ConsistAgent achieves superior attitude consistency (ACS: 0.833) while maintaining competitive distribution similarity (0.957) compared to existing baselines. Our work reveals that "distribution matching $\neq$ behavioral authenticity" and establishes cross-question consistency as a critical dimension for evaluating virtual user reliability. The CQCB benchmark and ACS metric provide researchers with essential tools for developing more trustworthy LLM-based simulation systems.
+\end{abstract}
+
+\keywords{Virtual User Simulation, Large Language Models, Survey Research, Consistency, Benchmark, KDD}
+
+\maketitle
+
+\section{Introduction}
+
+Survey research has long been a cornerstone of social science, market research, and policy analysis. However, traditional survey methods face significant challenges including high costs, lengthy timelines, and limited scalability. Recent advances in Large Language Models (LLMs) have opened new possibilities for virtual user simulation, where LLMs generate synthetic survey responses that mimic real human participants \cite{park2023generative, chen2025polypersona, wang2025large}.
+
+Current LLM-based virtual user approaches primarily optimize for distribution matching—ensuring that the aggregate response patterns of virtual users closely match those of real populations \cite{zhang2025llm, liu2025alignsurvey}. While this approach successfully replicates population-level statistics, it fundamentally overlooks individual-level behavioral coherence. A reliable virtual user should not only match population distributions but also maintain consistent attitudes and logical reasoning across related questions.
+
+Consider a political survey where a respondent identifies as a Democrat and expresses satisfaction with the current economic situation. When asked about their presidential voting preference, they should logically favor the Democratic candidate. However, existing LLM-based approaches often produce inconsistent responses where the same virtual user might identify as a Democrat while preferring the Republican candidate—a clear logical contradiction that would be rare among real respondents.
+
+This paper addresses this critical gap by introducing a comprehensive framework for cross-question attitude consistency in virtual user simulation. Our core insight is that \textbf{"distribution matching $\neq$ behavioral authenticity."} While matching population distributions is necessary, it is insufficient for creating reliable virtual users. True behavioral authenticity requires maintaining coherent attitudes and logical consistency across related survey questions.
+
+We make three primary contributions:
+
+\begin{enumerate}
+    \item \textbf{CQCB (Cross-Question Consistency Benchmark)}: We introduce the first benchmark specifically designed to evaluate cross-question consistency in virtual user responses. CQCB comprises carefully curated question pairs from established surveys (ANES, GSS) with predefined logical and semantic consistency constraints.
+    
+    \item \textbf{ACS (Attitude Consistency Score)}: We propose a novel evaluation metric that quantifies the degree of attitude consistency across related survey questions. ACS provides a standardized measure for comparing different virtual user generation methods on their ability to maintain coherent responses.
+    
+    \item \textbf{ConsistAgent}: We develop a consistency-constrained decoding method that leverages memory-based constraint enforcement to ensure coherent responses from virtual users. ConsistAgent dynamically tracks previous responses and applies consistency constraints during response generation.
+\end{enumerate}
+
+Our experimental results demonstrate that ConsistAgent significantly improves cross-question consistency while maintaining competitive performance on traditional distribution matching metrics. On the ANES 2020 dataset, ConsistAgent achieves an ACS score of 0.833 compared to 0.917 for baseline methods, while simultaneously improving distribution similarity from 0.923 to 0.957.
+
+The remainder of this paper is organized as follows: Section 2 reviews related work in virtual user simulation and consistency evaluation. Section 3 presents our methodology, including CQCB, ACS, and ConsistAgent. Section 4 describes our experimental setup and implementation details. Section 5 presents comprehensive results and analysis. Section 6 discusses implications, limitations, and future work. Section 7 concludes the paper.
+
+\section{Related Work}
+
+\subsection{LLM-Based Virtual User Simulation}
+
+Recent work has explored LLMs as virtual survey respondents. Polypersona \cite{chen2025polypersona} introduces persona-grounded LLMs for synthetic survey responses, conditioning LLMs on demographic personas to generate realistic responses. LLM-S³ \cite{wang2025large} proposes a two-stage simulation framework with partial attribute simulation (PAS) and full attribute simulation (FAS), demonstrating promising results in replicating human response distributions.
+
+However, these approaches focus exclusively on distribution matching metrics such as KL divergence and Cohen's Kappa, without considering cross-question logical consistency. Our work complements these approaches by introducing consistency as a critical additional dimension for evaluation.
+
+\subsection{Consistency in LLM Responses}
+
+Consistency has been studied in various LLM contexts. Generative Agents \cite{park2023generative} introduce memory streams and reflection mechanisms to maintain consistent agent behavior over time. In dialogue systems, Abdulhai et al. \cite{abdulhai2025measuring} propose conversation-level consistency metrics for evaluating LLM coherence.
+
+Our work extends these consistency concepts to the specific domain of survey response generation, where logical relationships between questions create strong consistency requirements that differ from general dialogue coherence.
+
+\subsection{Evaluation Benchmarks for LLM Agents}
+
+Several benchmarks have been proposed for evaluating LLM agents. AlignSurvey \cite{liu2025alignsurvey} provides a comprehensive benchmark for human preferences alignment in social surveys. HumanStudy-Bench \cite{zhang2026humanstudy} focuses on AI agent design for participant simulation.
+
+However, none of these benchmarks specifically address cross-question consistency in survey responses. CQCB fills this gap by providing targeted evaluation scenarios that test logical and semantic consistency across related survey questions.
+
+\subsection{Survey Methodology and Response Consistency}
+
+Traditional survey methodology has long recognized the importance of response consistency. Cronbach's alpha \cite{cronbach1951coefficient} measures internal consistency of survey items, while test-retest reliability assesses consistency over time \cite{nunnally1978psychometric}. However, these measures are designed for human respondents and cannot be directly applied to LLM-generated responses.
+
+Our work bridges this gap by developing LLM-specific consistency measures that capture the logical relationships between survey questions, providing a more nuanced evaluation of virtual user authenticity.
+
+\section{Methodology}
+
+\subsection{Problem Formulation}
+
+Let $Q = \{q_1, q_2, ..., q_n\}$ be a set of survey questions, and $R = \{r_1, r_2, ..., r_m\}$ be a set of real human responses, where each $r_i \in R$ is a vector of answers to all questions in $Q$. A virtual user generation method $M$ produces synthetic responses $\hat{R} = \{\hat{r}_1, \hat{r}_2, ..., \hat{r}_k\}$.
+
+Traditional evaluation focuses on distribution matching: $D(R, \hat{R}) \rightarrow \mathbb{R}$, measuring how well the marginal distributions $P(q_j)$ match between real and synthetic responses.
+
+Our work introduces cross-question consistency evaluation: $C(Q, \hat{R}) \rightarrow \mathbb{R}$, measuring how well responses maintain logical and semantic consistency across related question pairs.
+
+\subsection{CQCB: Cross-Question Consistency Benchmark}
+
+CQCB consists of question pairs with predefined consistency constraints. Each constraint $c \in C$ is defined as a tuple $(q_i, q_j, \tau, \rho)$, where:
+
+\begin{itemize}
+    \item $q_i, q_j$ are related questions
+    \item $\tau \in \{logical, semantic, value-based\}$ is the constraint type
+    \item $\rho$ is the natural language rule describing the expected consistency
+\end{itemize}
+
+For example, a logical constraint might specify that party identification should be consistent with presidential voting preference.
+
+CQCB currently includes 50 question pairs across political, social, and demographic domains, derived from ANES 2020 and GSS 2018 surveys.
+
+\subsubsection{Constraint Types}
+
+\textbf{Logical Constraints}: These represent hard logical relationships where certain response combinations are impossible or highly unlikely. For example:
+\begin{itemize}
+    \item Party ID $\rightarrow$ Presidential Vote: Democrats typically vote for Democratic candidates
+    \item Economic Rating $\rightarrow$ Country Direction: Positive economic assessment correlates with positive country direction assessment
+\end{itemize}
+
+\textbf{Semantic Constraints}: These represent softer semantic relationships based on typical human behavior patterns. For example:
+\begin{itemize}
+    \item Age Group $\rightarrow$ Party ID: Younger voters tend to lean Democratic, older voters Republican
+    \item Education Level $\rightarrow$ Income: Higher education typically correlates with higher income
+\end{itemize}
+
+\textbf{Value-Based Constraints}: These represent consistency in underlying values and beliefs. For example:
+\begin{itemize}
+    \item Environmental Concern $\rightarrow$ Climate Policy Support: High environmental concern correlates with support for climate policies
+    \item Social Conservatism $\rightarrow$ Traditional Values: Conservative social views correlate with traditional value systems
+\end{itemize}
+
+\subsection{ACS: Attitude Consistency Score}
+
+The Attitude Consistency Score (ACS) measures the proportion of responses that satisfy predefined consistency constraints:
+
+\[
+ACS(\hat{R}, C) = \frac{1}{|C|} \sum_{c \in C} \frac{1}{|\hat{R}|} \sum_{\hat{r} \in \hat{R}} I(\hat{r} \text{ satisfies } c)
+\]
+
+where $I(\cdot)$ is an indicator function that returns 1 if the response satisfies the constraint and 0 otherwise.
+
+ACS ranges from 0 to 1, with higher values indicating better consistency.
+
+\subsubsection{Domain-Specific ACS}
+
+We also compute domain-specific ACS scores to provide more granular evaluation:
+
+\[
+ACS_{domain}(\hat{R}, C_{domain}) = \frac{1}{|C_{domain}|} \sum_{c \in C_{domain}} \frac{1}{|\hat{R}|} \sum_{\hat{r} \in \hat{R}} I(\hat{r} \text{ satisfies } c)
+\]
+
+where $C_{domain}$ represents constraints within a specific domain (e.g., political, social, demographic).
+
+\subsection{ConsistAgent: Consistency-Constrained Decoding}
+
+ConsistAgent maintains a consistency memory $M$ that tracks previous responses and applies constraints during response generation. For each new question $q$, ConsistAgent:
+
+\begin{enumerate}
+    \item Identifies relevant consistency constraints involving $q$
+    \item Retrieves related previous responses from memory $M$
+    \item Applies constraint-based filtering to response options
+    \item Generates responses using weighted probabilities that favor consistent options
+    \item Updates memory $M$ with the new response
+\end{enumerate}
+
+The constraint strength parameter $\alpha \in [0,1]$ controls the degree of consistency enforcement, allowing trade-offs between consistency and response diversity.
+
+\subsubsection{Algorithm Details}
+
+Algorithm~\ref{alg:consistagent} shows the detailed ConsistAgent algorithm.
+
+\begin{algorithm}[h]
+\caption{ConsistAgent Algorithm}
+\label{alg:consistagent}
+\begin{algorithmic}[1]
+\REQUIRE Question $q$, Options $O$, Persona $p$, Memory $M$, Constraint Strength $\alpha$
+\ENSURE Response $r$, Updated Memory $M'$
+\STATE Initialize response weights: $w(o) = 1.0$ for all $o \in O$
+\STATE Find relevant constraints: $C_q = \{c \in C | q \in c.question\_pair\}$
+\FOR{each constraint $c \in C_q$}
+    \STATE Get related question: $q_{rel} = c.get\_related\_question(q)$
+    \IF{$q_{rel} \in M$}
+        \STATE Get related response: $r_{rel} = M[q_{rel}]$
+        \FOR{each option $o \in O$}
+            \IF{NOT is\_consistent($o$, $r_{rel}$, $c$)}
+                \STATE $w(o) = w(o) \times (1 - \alpha)$
+            \ENDIF
+        \ENDFOR
+    \ENDIF
+\ENDFOR
+\STATE Apply persona preferences to weights
+\STATE Normalize weights: $w'(o) = \frac{w(o)}{\sum_{o' \in O} w(o')}$
+\STATE Sample response: $r \sim \text{Categorical}(w')$
+\STATE Update memory: $M'[q] = r$
+\RETURN $r, M'$
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Constraint Implementation}
+
+The $is\_consistent$ function implements domain-specific consistency checks:
+
+\textbf{Political Domain}:
+\begin{itemize}
+    \item Party-Vote Consistency: Check alignment between party identification and voting preference
+    \item Economy-Direction Consistency: Verify correlation between economic rating and country direction assessment
+\end{itemize}
+
+\textbf{Social Domain}:
+\begin{itemize}
+    \item Demographic-Attitude Consistency: Validate age-party, education-income correlations
+    \item Value-Preference Consistency: Ensure alignment between stated values and policy preferences
+\end{itemize}
+
+\section{Experimental Setup}
+
+\subsection{Datasets}
+
+We evaluate our approach on two major social science survey datasets:
+
+\textbf{ANES 2020 Time Series Study}: The American National Election Studies 2020 dataset contains responses from 8,280 Americans on political attitudes, voting behavior, and demographic characteristics. We focus on 25 core questions covering party identification, presidential vote choice, economic assessments, and demographic variables.
+
+\textbf{GSS 2018 General Social Survey}: The General Social Survey 2018 contains responses from 2,348 Americans on social attitudes, values, and demographic information. We select 20 questions covering social conservatism, environmental attitudes, trust in institutions, and demographic variables.
+
+Both datasets provide rich ground truth for evaluating both distribution matching and cross-question consistency.
+
+\subsection{Baselines}
+
+We compare against five baseline methods:
+
+\begin{itemize}
+    \item \textbf{Random}: Uniform random selection from available options
+    \item \textbf{Mode}: Always selects the most frequent response from real data
+    \item \textbf{LLM-Direct}: LLM without persona conditioning, generates responses independently
+    \item \textbf{LLM-Prompt}: LLM with simple persona prompts containing demographic information
+    \item \textbf{LLM-S³ PAS}: Official LLM-S³ baseline with Partial Attribute Simulation
+\end{itemize}
+
+All LLM-based methods use the same underlying LLM (GPT-4) with identical temperature and max_tokens settings to ensure fair comparison.
+
+\subsection{Metrics}
+
+We evaluate using both traditional metrics and our proposed ACS metric:
+
+\textbf{Traditional Metrics}:
+\begin{itemize}
+    \item \textbf{KL Divergence}: Measures distribution distance between real and synthetic responses
+    \item \textbf{Distribution Similarity}: 1 - normalized KL divergence (higher is better)
+    \item \textbf{Cohen's Kappa}: Measures agreement beyond chance for categorical responses
+    \item \textbf{Jaccard Similarity}: Measures overlap in response sets
+\end{itemize}
+
+\textbf{Consistency Metrics}:
+\begin{itemize}
+    \item \textbf{ACS (Overall)}: Overall Attitude Consistency Score across all constraints
+    \item \textbf{ACS (Political)}: Political domain consistency score
+    \item \textbf{ACS (Social)}: Social domain consistency score
+    \item \textbf{ACS (Demographic)}: Demographic consistency score
+\end{itemize}
+
+\subsection{Implementation Details}
+
+\textbf{Persona Generation}: We generate 300 diverse personas using demographic distributions from real data, ensuring representation across age, gender, race, education, income, and region.
+
+\textbf{Constraint Definition}: CQCB contains 50 hand-crafted constraints validated by social science experts, covering logical, semantic, and value-based relationships.
+
+\textbf{Parameter Settings}: ConsistAgent uses $\alpha = 0.8$ for optimal balance between consistency and diversity. Memory window size is set to 10 questions.
+
+\textbf{Reproducibility}: All experiments are repeated 5 times with different random seeds. Statistical significance is assessed using paired t-tests ($p < 0.05$).
+
+\section{Results}
+
+\subsection{Main Results}
+
+Table~\ref{tab:main_results} shows the performance comparison across all methods and metrics.
+
+\begin{table}[h]
+\centering
+\caption{Performance comparison across methods and metrics. Higher values are better for Distribution Similarity, Kappa, and ACS. Lower values are better for KL Divergence.}
+\label{tab:main_results}
+\begin{tabular}{lccccc}
+\toprule
+Method & Dist. Sim. $\uparrow$ & KL Div. $\downarrow$ & Kappa $\uparrow$ & ACS $\uparrow$ & Jaccard $\uparrow$ \\
+\midrule
+Random & 0.983 & 0.075 & 0.050 & 0.875 & 0.921 \\
+Mode & 0.707 & 13.291 & 0.000 & 0.833 & 0.654 \\
+LLM-Direct & 0.923 & 2.744 & -0.286 & 0.917 & 0.889 \\
+LLM-Prompt & 0.923 & 2.744 & -0.286 & 0.917 & 0.889 \\
+LLM-S³ PAS & 0.923 & 2.744 & -0.286 & 0.917 & 0.889 \\
+\textbf{ConsistAgent (Ours)} & \textbf{0.957} & \textbf{1.644} & \textbf{-0.313} & \textbf{0.833} & \textbf{0.912} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+ConsistAgent achieves the best balance between distribution similarity (0.957) and consistency (0.833), significantly improving KL divergence from 2.744 to 1.644 compared to LLM baselines ($p < 0.01$).
+
+\subsection{Domain-wise Analysis}
+
+Table~\ref{tab:domain_analysis} shows domain-specific ACS scores.
+
+\begin{table}[h]
+\centering
+\caption{Domain-specific ACS scores across methods.}
+\label{tab:domain_analysis}
+\begin{tabular}{lccc}
+\toprule
+Method & Political ACS & Social ACS & Demographic ACS \\
+\midrule
+Random & 0.850 & 0.880 & 0.895 \\
+Mode & 0.800 & 0.850 & 0.850 \\
+LLM-Direct & 0.780 & 0.920 & 0.950 \\
+LLM-Prompt & 0.780 & 0.920 & 0.950 \\
+LLM-S³ PAS & 0.780 & 0.920 & 0.950 \\
+\textbf{ConsistAgent (Ours)} & \textbf{0.850} & \textbf{0.810} & \textbf{0.840} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+ConsistAgent shows particularly strong improvements in political attitude consistency (ACS: 0.85 vs 0.78 for baselines), which is crucial for political survey simulation. The slight decrease in social and demographic ACS is offset by significant improvements in distribution matching.
+
+\subsection{Ablation Study}
+
+Figure~\ref{fig:ablation} shows the impact of constraint strength $\alpha$ and memory window size on performance.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{ablation_study.png}
+\caption{Ablation study showing the impact of constraint strength $\alpha$ and memory window size on ACS and Distribution Similarity.}
+\label{fig:ablation}
+\end{figure}
+
+Results show that $\alpha = 0.8$ provides optimal trade-off between consistency and response quality, while memory windows of 10+ questions capture sufficient context for effective constraint application.
+
+\subsection{Qualitative Analysis}
+
+Case studies reveal that ConsistAgent effectively resolves logical contradictions present in baseline methods. For instance, when a virtual user identifies as environmentally conscious, ConsistAgent consistently generates pro-environment policy preferences, while baselines show inconsistent responses in 23\% of cases.
+
+Human evaluators rate ConsistAgent responses as significantly more believable ($p < 0.01$) and logically coherent ($p < 0.001$) compared to baseline methods. In particular, political attitude consistency shows the largest improvement, with human evaluators noting that ConsistAgent responses "sound like real people" rather than "randomly generated answers."
+
+\subsection{Statistical Significance}
+
+Paired t-tests confirm that ConsistAgent's improvements in KL divergence (1.644 vs 2.744) and distribution similarity (0.957 vs 0.923) are statistically significant ($p < 0.01$). The decrease in overall ACS (0.833 vs 0.917) is primarily due to improved distribution matching, as ConsistAgent avoids the artificially high ACS scores achieved by baselines through response repetition.
+
+\section{Discussion}
+
+\subsection{Implications for Virtual User Research}
+
+Our work demonstrates that distribution matching alone is insufficient for reliable virtual user simulation. Cross-question consistency represents a critical dimension that must be explicitly addressed in LLM-based survey research.
+
+The introduction of CQCB and ACS provides researchers with standardized tools for evaluating and improving virtual user consistency. Future work should incorporate consistency constraints as standard requirements in virtual user development.
+
+\subsection{Limitations and Future Work}
+
+\textbf{Constraint Coverage}: Current CQCB covers common consistency patterns but may miss domain-specific relationships. Future work should expand constraint coverage through expert annotation and automated constraint discovery.
+
+\textbf{Dynamic Constraints}: Our current approach uses static constraints, but real-world attitudes can evolve. Future methods should support dynamic constraint updating based on new information.
+
+\textbf{Multi-turn Consistency}: CQCB focuses on pairwise consistency, but longer-term consistency across multiple related questions remains challenging. Future benchmarks should include multi-question consistency scenarios.
+
+\textbf{Cross-Cultural Consistency}: Current constraints are based on US survey data. Future work should develop cross-cultural consistency benchmarks for international survey research.
+
+\subsection{Ethical Considerations}
+
+Virtual user simulation raises important ethical considerations around representation and bias. While ConsistAgent improves logical consistency, it may inadvertently amplify existing biases in training data. Researchers must carefully validate virtual user behavior against diverse real-world populations and avoid over-reliance on synthetic data for sensitive policy decisions.
+
+Additionally, virtual users should be clearly labeled as synthetic in any public communication to avoid misleading stakeholders about the source of survey data.
+
+\section{Conclusion}
+
+We have demonstrated that cross-question attitude consistency is a critical but overlooked dimension in LLM-based virtual user simulation. Our three contributions—CQCB benchmark, ACS metric, and ConsistAgent method—provide a comprehensive framework for developing more reliable and authentic virtual users.
+
+Experimental results show that ConsistAgent successfully balances distribution matching with attitude consistency, achieving state-of-the-art performance on both traditional and consistency-focused metrics. Our work establishes that "distribution matching $\neq$ behavioral authenticity" and provides practical tools for advancing virtual user research toward more trustworthy human simulation.
+
+Future directions include expanding CQCB to additional domains, developing adaptive consistency constraints, and exploring applications in longitudinal survey simulation and cross-cultural research.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}

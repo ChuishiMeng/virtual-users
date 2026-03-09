@@ -1,0 +1,10 @@
+{
+  "dataset": "gss_2018",
+  "distribution_similarity": 0.9141966664962711,
+  "kl_divergence": 2.7242254894438527,
+  "acs_overall": 0.08333333333333333,
+  "acs_domain_scores": {
+    "political": 0.0,
+    "social": 0.25
+  }
+}

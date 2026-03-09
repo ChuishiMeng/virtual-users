@@ -1,0 +1,120 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{8}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Abdulhai et~al\mbox{.}(2025)]%
+        {abdulhai2025measuring}
+\bibfield{author}{\bibinfo{person}{Amr Abdulhai} {et~al\mbox{.}}}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Measuring Consistency in LLM Dialogue Systems}. In
+  \bibinfo{booktitle}{\emph{NeurIPS}}.
+\newblock
+
+
+\bibitem[Chen et~al\mbox{.}(2025)]%
+        {chen2025polypersona}
+\bibfield{author}{\bibinfo{person}{Yixin Chen} {et~al\mbox{.}}}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Polypersona: Persona-Grounded LLM for Synthetic
+  Survey Responses}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2512.14562}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[Cronbach(1951)]%
+        {cronbach1951coefficient}
+\bibfield{author}{\bibinfo{person}{Lee~J Cronbach}.}
+  \bibinfo{year}{1951}\natexlab{}.
+\newblock \showarticletitle{Coefficient alpha and the internal structure of
+  tests}.
+\newblock \bibinfo{journal}{\emph{Psychometrika}} \bibinfo{volume}{16},
+  \bibinfo{number}{3} (\bibinfo{year}{1951}), \bibinfo{pages}{297--334}.
+\newblock
+
+
+\bibitem[Liu et~al\mbox{.}(2025)]%
+        {liu2025alignsurvey}
+\bibfield{author}{\bibinfo{person}{Xinyu Liu} {et~al\mbox{.}}}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{AlignSurvey: A Comprehensive Benchmark for Human
+  Preferences Alignment}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2511.07871}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[Nunnally and Bernstein(1978)]%
+        {nunnally1978psychometric}
+\bibfield{author}{\bibinfo{person}{Jum~C Nunnally} {and} \bibinfo{person}{Ira~H
+  Bernstein}.} \bibinfo{year}{1978}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Psychometric theory}}.
+\newblock \bibinfo{publisher}{McGraw-Hill}.
+\newblock
+
+
+\bibitem[Park et~al\mbox{.}(2023)]%
+        {park2023generative}
+\bibfield{author}{\bibinfo{person}{Joon~Sung Park} {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Generative Agents: Interactive Simulacra of Human
+  Behavior}. In \bibinfo{booktitle}{\emph{UIST}}.
+\newblock
+
+
+\bibitem[Zhang et~al\mbox{.}(2025)]%
+        {zhang2025llm}
+\bibfield{author}{\bibinfo{person}{Hui Zhang} {et~al\mbox{.}}}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{LLM-S³: Synthetic Survey Simulation with LLMs}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2509.06337}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[Zhang et~al\mbox{.}(2026)]%
+        {zhang2026humanstudy}
+\bibfield{author}{\bibinfo{person}{Yifan Zhang} {et~al\mbox{.}}}
+  \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{HumanStudy-Bench: Towards AI Agent Design for
+  Participant Simulation}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2602.00685}}
+  (\bibinfo{year}{2026}).
+\newblock
+
+
+\end{thebibliography}

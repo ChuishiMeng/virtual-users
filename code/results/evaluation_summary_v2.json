@@ -1,0 +1,487 @@
+{
+  "config": {
+    "name": "virtual_users_v3_experiment",
+    "description": "Virtual user research with cross-question attitude consistency focus",
+    "output_dir": "results",
+    "log_dir": "logs",
+    "n_repeats": 5,
+    "model": {
+      "name": "glm-5",
+      "provider": "openai",
+      "temperature": 0.7,
+      "max_tokens": 2048,
+      "api_key_env": "OPENAI_API_KEY"
+    },
+    "data": {
+      "name": "anes_2020",
+      "data_dir": "data/raw",
+      "cache_dir": "data/cache",
+      "sample_size": 8,
+      "seed": 42
+    },
+    "persona": {
+      "pool_size": 300,
+      "diversity_weight": 0.5,
+      "ensure_demographic_match": true,
+      "demographic_fields": [
+        "age_group",
+        "gender",
+        "race",
+        "education",
+        "income",
+        "region"
+      ]
+    },
+    "retrieval": {
+      "enabled": true,
+      "top_k": 5,
+      "rerank": true,
+      "embedding_model": "text-embedding-ada-002"
+    },
+    "baselines": [
+      "random",
+      "mode",
+      "llm_direct",
+      "llm_prompt",
+      "llm_s3_pas",
+      "consist_agent"
+    ],
+    "evaluation": {
+      "metrics": [
+        "kl_divergence",
+        "js_distance",
+        "distribution_similarity",
+        "mode_match_accuracy",
+        "top3_accuracy",
+        "cohens_kappa",
+        "jaccard_similarity",
+        "exact_match_accuracy"
+      ],
+      "n_bootstrap": 1000,
+      "significance_level": 0.05,
+      "save_detailed_results": true
+    },
+    "consistency": {
+      "enabled": false,
+      "acs_threshold": 0.7,
+      "constraint_strength": 0.8,
+      "memory_window": 10
+    },
+    "logging": {
+      "level": "INFO",
+      "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+      "file": true,
+      "console": true
+    }
+  },
+  "evaluations": {
+    "random": {
+      "traditional": {
+        "per_question": {
+          "presidential_vote": {
+            "mode_match": 1.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.9830889622173886,
+            "kl_divergence": 0.06540601796975098,
+            "kappa": -0.21739130434782616,
+            "chi_square_p": 0.9115095139328327
+          },
+          "party_id": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.9830889622173886,
+            "kl_divergence": 0.07192051811204622,
+            "kappa": 0.16666666666666663,
+            "chi_square_p": 0.9115095139328327
+          },
+          "economy_rating": {
+            "mode_match": 0.0,
+            "top3_accuracy": 1.0,
+            "distribution_similarity": 0.9565250473459532,
+            "kl_divergence": 0.2027325540515481,
+            "kappa": -0.11627906976744184,
+            "chi_square_p": 0.5109780874356167
+          },
+          "country_direction": {
+            "mode_match": 1.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.9920410020833013,
+            "kl_divergence": 0.03226926056838221,
+            "kappa": 0.75,
+            "chi_square_p": 1.0
+          },
+          "trust_government": {
+            "mode_match": 0.0,
+            "top3_accuracy": 1.0,
+            "distribution_similarity": 1.0,
+            "kl_divergence": 0.0,
+            "kappa": -0.33333333333333326,
+            "chi_square_p": 1.0
+          }
+        },
+        "aggregate": {
+          "avg_distribution_similarity": 0.9829487947728064,
+          "avg_kl_divergence": 0.07446567014034551,
+          "avg_kappa": 0.049932591843613074,
+          "significant_questions": 0,
+          "total_questions": 5
+        }
+      },
+      "acs": {
+        "acs_overall": 0.875,
+        "acs_domain_scores": {
+          "political": 1.0,
+          "social": 0.625
+        },
+        "acs_constraint_scores": {
+          "pol_001": 1.0,
+          "pol_002": 1.0,
+          "pol_003": 1.0,
+          "soc_001": 0.5,
+          "soc_002": 0.75,
+          "trust_001": 1.0
+        }
+      }
+    },
+    "mode": {
+      "traditional": {
+        "per_question": {
+          "presidential_vote": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.3333333333333333,
+            "distribution_similarity": 0.7096952476456964,
+            "kl_divergence": 13.135674505862024,
+            "kappa": 0.0,
+            "chi_square_p": 0.006005881539357837
+          },
+          "party_id": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.3333333333333333,
+            "distribution_similarity": 0.6196043373314234,
+            "kl_divergence": 15.88309383612754,
+            "kappa": 0.0,
+            "chi_square_p": 0.022290983128701782
+          },
+          "economy_rating": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.3333333333333333,
+            "distribution_similarity": 0.7096952466676906,
+            "kl_divergence": 13.308961300999847,
+            "kappa": 0.0,
+            "chi_square_p": 0.008229747049020028
+          },
+          "country_direction": {
+            "mode_match": 1.0,
+            "top3_accuracy": 0.3333333333333333,
+            "distribution_similarity": 0.7842384467647185,
+            "kl_divergence": 10.819778284268786,
+            "kappa": 0.0,
+            "chi_square_p": 0.08326451666355052
+          },
+          "trust_government": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.3333333333333333,
+            "distribution_similarity": 0.7096952466676906,
+            "kl_divergence": 13.308961300999847,
+            "kappa": 0.0,
+            "chi_square_p": 0.008229747049020028
+          }
+        },
+        "aggregate": {
+          "avg_distribution_similarity": 0.706585705015444,
+          "avg_kl_divergence": 13.291293845651609,
+          "avg_kappa": 0.0,
+          "significant_questions": 4,
+          "total_questions": 5
+        }
+      },
+      "acs": {
+        "acs_overall": 0.8333333333333334,
+        "acs_domain_scores": {
+          "political": 1.0,
+          "social": 0.5
+        },
+        "acs_constraint_scores": {
+          "pol_001": 1.0,
+          "pol_002": 1.0,
+          "pol_003": 1.0,
+          "soc_001": 1.0,
+          "soc_002": 0.0,
+          "trust_001": 1.0
+        }
+      }
+    },
+    "llm_direct": {
+      "traditional": {
+        "per_question": {
+          "presidential_vote": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.8098021681623245,
+            "kl_divergence": 8.093596333602433,
+            "kappa": -0.03703703703703698,
+            "chi_square_p": 0.07855315983679793
+          },
+          "party_id": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.8752081861060794,
+            "kl_divergence": 5.308522865108619,
+            "kappa": -0.33333333333333326,
+            "chi_square_p": 0.36180502749753235
+          },
+          "economy_rating": {
+            "mode_match": 1.0,
+            "top3_accuracy": 1.0,
+            "distribution_similarity": 0.9849017145132778,
+            "kl_divergence": 0.06540601796975096,
+            "kappa": 0.024390243902439046,
+            "chi_square_p": 0.7881276277453111
+          },
+          "country_direction": {
+            "mode_match": 1.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.9920410020833013,
+            "kl_divergence": 0.03226926056838221,
+            "kappa": -0.75,
+            "chi_square_p": 1.0
+          },
+          "trust_government": {
+            "mode_match": 1.0,
+            "top3_accuracy": 1.0,
+            "distribution_similarity": 0.9515050198185836,
+            "kl_divergence": 0.22041999933553946,
+            "kappa": -0.33333333333333326,
+            "chi_square_p": 0.4723665527410149
+          }
+        },
+        "aggregate": {
+          "avg_distribution_similarity": 0.9226916181367132,
+          "avg_kl_divergence": 2.7440428953169453,
+          "avg_kappa": -0.2858626919602529,
+          "significant_questions": 0,
+          "total_questions": 5
+        }
+      },
+      "acs": {
+        "acs_overall": 0.9166666666666666,
+        "acs_domain_scores": {
+          "political": 1.0,
+          "social": 0.75
+        },
+        "acs_constraint_scores": {
+          "pol_001": 1.0,
+          "pol_002": 1.0,
+          "pol_003": 1.0,
+          "soc_001": 0.625,
+          "soc_002": 0.875,
+          "trust_001": 1.0
+        }
+      }
+    },
+    "llm_prompt": {
+      "traditional": {
+        "per_question": {
+          "presidential_vote": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.8098021681623245,
+            "kl_divergence": 8.093596333602433,
+            "kappa": -0.03703703703703698,
+            "chi_square_p": 0.07855315983679793
+          },
+          "party_id": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.8752081861060794,
+            "kl_divergence": 5.308522865108619,
+            "kappa": -0.33333333333333326,
+            "chi_square_p": 0.36180502749753235
+          },
+          "economy_rating": {
+            "mode_match": 1.0,
+            "top3_accuracy": 1.0,
+            "distribution_similarity": 0.9849017145132778,
+            "kl_divergence": 0.06540601796975096,
+            "kappa": 0.024390243902439046,
+            "chi_square_p": 0.7881276277453111
+          },
+          "country_direction": {
+            "mode_match": 1.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.9920410020833013,
+            "kl_divergence": 0.03226926056838221,
+            "kappa": -0.75,
+            "chi_square_p": 1.0
+          },
+          "trust_government": {
+            "mode_match": 1.0,
+            "top3_accuracy": 1.0,
+            "distribution_similarity": 0.9515050198185836,
+            "kl_divergence": 0.22041999933553946,
+            "kappa": -0.33333333333333326,
+            "chi_square_p": 0.4723665527410149
+          }
+        },
+        "aggregate": {
+          "avg_distribution_similarity": 0.9226916181367132,
+          "avg_kl_divergence": 2.7440428953169453,
+          "avg_kappa": -0.2858626919602529,
+          "significant_questions": 0,
+          "total_questions": 5
+        }
+      },
+      "acs": {
+        "acs_overall": 0.9166666666666666,
+        "acs_domain_scores": {
+          "political": 1.0,
+          "social": 0.75
+        },
+        "acs_constraint_scores": {
+          "pol_001": 1.0,
+          "pol_002": 1.0,
+          "pol_003": 1.0,
+          "soc_001": 0.625,
+          "soc_002": 0.875,
+          "trust_001": 1.0
+        }
+      }
+    },
+    "llm_s3_pas": {
+      "traditional": {
+        "per_question": {
+          "presidential_vote": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.8098021681623245,
+            "kl_divergence": 8.093596333602433,
+            "kappa": -0.03703703703703698,
+            "chi_square_p": 0.07855315983679793
+          },
+          "party_id": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.8752081861060794,
+            "kl_divergence": 5.308522865108619,
+            "kappa": -0.33333333333333326,
+            "chi_square_p": 0.36180502749753235
+          },
+          "economy_rating": {
+            "mode_match": 1.0,
+            "top3_accuracy": 1.0,
+            "distribution_similarity": 0.9849017145132778,
+            "kl_divergence": 0.06540601796975096,
+            "kappa": 0.024390243902439046,
+            "chi_square_p": 0.7881276277453111
+          },
+          "country_direction": {
+            "mode_match": 1.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.9920410020833013,
+            "kl_divergence": 0.03226926056838221,
+            "kappa": -0.75,
+            "chi_square_p": 1.0
+          },
+          "trust_government": {
+            "mode_match": 1.0,
+            "top3_accuracy": 1.0,
+            "distribution_similarity": 0.9515050198185836,
+            "kl_divergence": 0.22041999933553946,
+            "kappa": -0.33333333333333326,
+            "chi_square_p": 0.4723665527410149
+          }
+        },
+        "aggregate": {
+          "avg_distribution_similarity": 0.9226916181367132,
+          "avg_kl_divergence": 2.7440428953169453,
+          "avg_kappa": -0.2858626919602529,
+          "significant_questions": 0,
+          "total_questions": 5
+        }
+      },
+      "acs": {
+        "acs_overall": 0.9166666666666666,
+        "acs_domain_scores": {
+          "political": 1.0,
+          "social": 0.75
+        },
+        "acs_constraint_scores": {
+          "pol_001": 1.0,
+          "pol_002": 1.0,
+          "pol_003": 1.0,
+          "soc_001": 0.625,
+          "soc_002": 0.875,
+          "trust_001": 1.0
+        }
+      }
+    },
+    "consist_agent": {
+      "traditional": {
+        "per_question": {
+          "presidential_vote": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.8328523000555147,
+            "kl_divergence": 8.021675815490386,
+            "kappa": -0.03703703703703698,
+            "chi_square_p": 0.07855315983679793
+          },
+          "party_id": {
+            "mode_match": 0.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.9830889622173886,
+            "kl_divergence": 0.07192051811204622,
+            "kappa": -0.33333333333333326,
+            "chi_square_p": 0.9115095139328327
+          },
+          "economy_rating": {
+            "mode_match": 0.0,
+            "top3_accuracy": 1.0,
+            "distribution_similarity": 0.9892280563279672,
+            "kl_divergence": 0.04416863837059182,
+            "kappa": -0.1428571428571428,
+            "chi_square_p": 0.8424604416167714
+          },
+          "country_direction": {
+            "mode_match": 1.0,
+            "top3_accuracy": 0.6666666666666666,
+            "distribution_similarity": 0.9920410020833013,
+            "kl_divergence": 0.03226926056838221,
+            "kappa": -0.75,
+            "chi_square_p": 1.0
+          },
+          "trust_government": {
+            "mode_match": 0.0,
+            "top3_accuracy": 1.0,
+            "distribution_similarity": 0.987415304032078,
+            "kl_divergence": 0.05068313851288708,
+            "kappa": -0.30232558139534893,
+            "chi_square_p": 0.8187307530779818
+          }
+        },
+        "aggregate": {
+          "avg_distribution_similarity": 0.9569251249432499,
+          "avg_kl_divergence": 1.6441434742108587,
+          "avg_kappa": -0.31311061892457237,
+          "significant_questions": 0,
+          "total_questions": 5
+        }
+      },
+      "acs": {
+        "acs_overall": 0.8333333333333334,
+        "acs_domain_scores": {
+          "political": 0.96875,
+          "social": 0.5625
+        },
+        "acs_constraint_scores": {
+          "pol_001": 0.875,
+          "pol_002": 1.0,
+          "pol_003": 1.0,
+          "soc_001": 0.375,
+          "soc_002": 0.75,
+          "trust_001": 1.0
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/chuishi-agent/agent-work/research/virtual-users/versions -type f -name \"*.md\" -o -name \"*.pdf\" -o -name \"*.txt\" 2>/dev/null | head -50)",
+      "Bash(mkdir -p /Users/chuishi-agent/agent-work/research/virtual-users/versions/v3 && cp -r /Users/chuishi-agent/agent-work/research/virtual-users/current/* /Users/chuishi-agent/agent-work/research/virtual-users/versions/v3/ 2>/dev/null || echo \"Copy completed\")",
+      "Bash(mkdir -p /Users/chuishi-agent/agent-work/research/virtual-users/versions/v3 && cp -r /Users/chuishi-agent/agent-work/research/virtual-users/current/* /Users/chuishi-agent/agent-work/research/virtual-users/versions/v3/ 2>/dev/null || echo \"Some files may have been skipped\")",
+      "Bash(cd /Users/chuishi-agent/agent-work/research/virtual-users/code && python experiments/run_ablation.py --output_dir results/ablation 2>&1)",
+      "Bash(cd /Users/chuishi-agent/agent-work/research/virtual-users/code && python3 experiments/run_ablation.py --output_dir results/ablation 2>&1)",
+      "Bash(python3 experiments/run_ablation.py --output_dir results/ablation 2>&1)",
+      "Bash(python3 generate_figures.py 2>&1)",
+      "Bash(cd /Users/chuishi-agent/agent-work/research/virtual-users/current/paper && pdflatex -interaction=nonstopmode strict_11_pages.tex 2>&1 | tail -50)",
+      "Bash(bibtex strict_11_pages 2>&1)",
+      "Bash(pdflatex -interaction=nonstopmode strict_11_pages.tex 2>&1 | tail -30)",
+      "Bash(pdflatex -interaction=nonstopmode strict_11_pages.tex 2>&1 | tail -20)",
+      "Bash(pdflatex -interaction=nonstopmode strict_11_pages.tex 2>&1 | tail -10 && pdflatex -interaction=nonstopmode strict_11_pages.tex 2>&1 | tail -10)",
+      "Bash(pdfinfo strict_11_pages.pdf 2>&1)",
+      "Bash(pdflatex -interaction=nonstopmode strict_11_pages.tex 2>&1 | tail -15)",
+      "Bash(wc -l /Users/chuishi-agent/agent-work/research/virtual-users/current/paper/*.tex 2>/dev/null | sort -n | tail -10)",
+      "Bash(pdflatex -interaction=nonstopmode kdd_submission_final.tex 2>&1 | tail -15)",
+      "Bash(bibtex kdd_submission_final 2>&1)",
+      "Bash(pdflatex -interaction=nonstopmode kdd_submission_final.tex 2>&1 | tail -10 && pdflatex -interaction=nonstopmode kdd_submission_final.tex 2>&1 | tail -10)",
+      "Bash(pdfinfo kdd_submission_final.pdf 2>&1)",
+      "Bash(pdflatex -interaction=nonstopmode kdd_submission_final.tex 2>&1 | tail -5)",
+      "Bash(pdflatex -interaction=nonstopmode kdd_submission_final.tex 2>&1 | tail -5 && pdflatex -interaction=nonstopmode kdd_submission_final.tex 2>&1 | tail -5)",
+      "Bash(pdfinfo kdd_submission_final.pdf)"
+    ]
+  }
+}

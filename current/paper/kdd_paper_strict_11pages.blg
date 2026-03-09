@@ -1,0 +1,82 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: kdd_paper_strict_11pages.aux
+The style file: ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: references.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Warning--empty publisher in abdulhai2025measuring
+Warning--empty address in abdulhai2025measuring
+Warning--page numbers missing in both pages and numpages fields in abdulhai2025measuring
+Warning--no number and no volume in bender2021dangers
+Warning--page numbers missing in both pages and numpages fields in bender2021dangers
+Warning--no number and no volume in bommasani2021opportunities
+Warning--page numbers missing in both pages and numpages fields in bommasani2021opportunities
+Warning--no number and no volume in celis2021survey
+Warning--page numbers missing in both pages and numpages fields in celis2021survey
+Warning--no number and no volume in chen2025polypersona
+Warning--page numbers missing in both pages and numpages fields in chen2025polypersona
+Warning--no number and no volume in liu2025alignsurvey
+Warning--page numbers missing in both pages and numpages fields in liu2025alignsurvey
+Warning--empty address in nunnally1978psychometric
+Warning--empty publisher in park2023generative
+Warning--empty address in park2023generative
+Warning--page numbers missing in both pages and numpages fields in park2023generative
+Warning--no number and no volume in wang2025large
+Warning--page numbers missing in both pages and numpages fields in wang2025large
+Warning--empty publisher in wei2022emergent
+Warning--empty address in wei2022emergent
+Warning--page numbers missing in both pages and numpages fields in wei2022emergent
+Warning--no number and no volume in zhang2025llm
+Warning--page numbers missing in both pages and numpages fields in zhang2025llm
+Warning--no number and no volume in zhang2026humanstudy
+Warning--page numbers missing in both pages and numpages fields in zhang2026humanstudy
+You've used 13 entries,
+            6056 wiz_defined-function locations,
+            1541 strings with 19364 characters,
+and the built_in function-call counts, 13001 in all, are:
+= -- 1812
+> -- 389
+< -- 0
++ -- 138
+- -- 175
+* -- 757
+:= -- 1266
+add.period$ -- 63
+call.type$ -- 13
+change.case$ -- 66
+chr.to.int$ -- 13
+cite$ -- 39
+duplicate$ -- 1149
+empty$ -- 828
+format.name$ -- 179
+if$ -- 3300
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 53
+newline$ -- 140
+num.names$ -- 91
+pop$ -- 518
+preamble$ -- 1
+purify$ -- 170
+quote$ -- 0
+skip$ -- 389
+stack$ -- 0
+substring$ -- 744
+swap$ -- 65
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 249
+warning$ -- 26
+while$ -- 94
+width$ -- 0
+write$ -- 271
+(There were 26 warnings)

@@ -1,0 +1,42 @@
+{
+  "memory_5": {
+    "memory_window": 5,
+    "distribution_similarity": 0.9569251249432499,
+    "kl_divergence": 1.6441434742108587,
+    "acs_overall": 0.8333333333333334,
+    "acs_domain_scores": {
+      "political": 0.96875,
+      "social": 0.5625
+    }
+  },
+  "memory_10": {
+    "memory_window": 10,
+    "distribution_similarity": 0.9569251249432499,
+    "kl_divergence": 1.6441434742108587,
+    "acs_overall": 0.8333333333333334,
+    "acs_domain_scores": {
+      "political": 0.96875,
+      "social": 0.5625
+    }
+  },
+  "memory_15": {
+    "memory_window": 15,
+    "distribution_similarity": 0.9569251249432499,
+    "kl_divergence": 1.6441434742108587,
+    "acs_overall": 0.8333333333333334,
+    "acs_domain_scores": {
+      "political": 0.96875,
+      "social": 0.5625
+    }
+  },
+  "memory_20": {
+    "memory_window": 20,
+    "distribution_similarity": 0.9569251249432499,
+    "kl_divergence": 1.6441434742108587,
+    "acs_overall": 0.8333333333333334,
+    "acs_domain_scores": {
+      "political": 0.96875,
+      "social": 0.5625
+    }
+  }
+}

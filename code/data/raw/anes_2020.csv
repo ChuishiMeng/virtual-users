@@ -1,0 +1,9 @@
+V201018,V201511,V201510,V201514,V201614,V201024,V202031,V202066,V202163,V202167,V202361
+18-29,Male,White,HS,<30k,Northeast,Biden,Democrat,Better,Right,Trust
+30-44,Female,Black,Some College,30k-60k,Midwest,Trump,Republican,Worse,Wrong,Distrust
+45-59,Male,Hispanic,Bachelor,60k-100k,South,Biden,Independent,Same,Right,Neutral
+60+,Female,Asian,Graduate,>100k,West,Trump,Other,Better,Wrong,Trust
+18-29,Female,White,HS,<30k,Northeast,Other,Democrat,Worse,Right,Distrust
+30-44,Male,Black,Some College,30k-60k,Midwest,No Vote,Republican,Same,Wrong,Neutral
+45-59,Female,Hispanic,Bachelor,60k-100k,South,Biden,Independent,Better,Right,Trust
+60+,Male,Asian,Graduate,>100k,West,Trump,Other,Worse,Wrong,Distrust

@@ -1,0 +1,82 @@
+# Virtual Users Research - Default Configuration
+# Version: v3 (Cross-Question Consistency Focus)
+
+name: virtual_users_v3_experiment
+description: "Virtual user research with cross-question attitude consistency focus"
+output_dir: results
+log_dir: logs
+n_repeats: 5
+
+# Model configuration
+model:
+  name: glm-5
+  provider: openai  # or other provider
+  temperature: 0.7
+  max_tokens: 2048
+  api_key_env: OPENAI_API_KEY  # Environment variable name for API key
+
+# Data configuration
+data:
+  name: anes_2020
+  data_dir: data/raw
+  cache_dir: data/cache
+  sample_size: 8  # Use same size as real data for testing
+  seed: 42
+
+# Persona configuration  
+persona:
+  pool_size: 300
+  diversity_weight: 0.5
+  ensure_demographic_match: true
+  demographic_fields:
+    - age_group
+    - gender
+    - race
+    - education
+    - income
+    - region
+
+# Retrieval configuration (RAG)
+retrieval:
+  enabled: true
+  top_k: 5
+  rerank: true
+  embedding_model: text-embedding-ada-002
+
+# Baseline methods to run
+baselines:
+  - random
+  - mode
+  - llm_direct
+  - llm_prompt
+  - llm_s3_pas
+  - consist_agent
+
+# Evaluation configuration
+evaluation:
+  metrics:
+    - kl_divergence
+    - js_distance
+    - distribution_similarity
+    - mode_match_accuracy
+    - top3_accuracy
+    - cohens_kappa
+    - jaccard_similarity
+    - exact_match_accuracy
+  n_bootstrap: 1000
+  significance_level: 0.05
+  save_detailed_results: true
+
+# New v3 specific configuration for cross-question consistency
+consistency:
+  enabled: false  # Set to true when implementing ConsistAgent
+  acs_threshold: 0.7  # Attitude Consistency Score threshold
+  constraint_strength: 0.8  # How strongly to enforce consistency
+  memory_window: 10  # Number of previous questions to consider
+
+# Logging configuration
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: true
+  console: true

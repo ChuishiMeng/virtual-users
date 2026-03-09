@@ -1,0 +1,62 @@
+{
+  "alpha_0.0": {
+    "alpha": 0.0,
+    "distribution_similarity": 0.9569251249432499,
+    "kl_divergence": 1.6441434742108587,
+    "acs_overall": 0.8333333333333334,
+    "acs_domain_scores": {
+      "political": 0.96875,
+      "social": 0.5625
+    }
+  },
+  "alpha_0.2": {
+    "alpha": 0.2,
+    "distribution_similarity": 0.9569251249432499,
+    "kl_divergence": 1.6441434742108587,
+    "acs_overall": 0.8333333333333334,
+    "acs_domain_scores": {
+      "political": 0.96875,
+      "social": 0.5625
+    }
+  },
+  "alpha_0.4": {
+    "alpha": 0.4,
+    "distribution_similarity": 0.9569251249432499,
+    "kl_divergence": 1.6441434742108587,
+    "acs_overall": 0.8333333333333334,
+    "acs_domain_scores": {
+      "political": 0.96875,
+      "social": 0.5625
+    }
+  },
+  "alpha_0.6": {
+    "alpha": 0.6,
+    "distribution_similarity": 0.9569251249432499,
+    "kl_divergence": 1.6441434742108587,
+    "acs_overall": 0.8333333333333334,
+    "acs_domain_scores": {
+      "political": 0.96875,
+      "social": 0.5625
+    }
+  },
+  "alpha_0.8": {
+    "alpha": 0.8,
+    "distribution_similarity": 0.9569251249432499,
+    "kl_divergence": 1.6441434742108587,
+    "acs_overall": 0.8333333333333334,
+    "acs_domain_scores": {
+      "political": 0.96875,
+      "social": 0.5625
+    }
+  },
+  "alpha_1.0": {
+    "alpha": 1.0,
+    "distribution_similarity": 0.9569251249432499,
+    "kl_divergence": 1.6441434742108587,
+    "acs_overall": 0.8333333333333334,
+    "acs_domain_scores": {
+      "political": 0.96875,
+      "social": 0.5625
+    }
+  }
+}
