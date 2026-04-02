@@ -11,7 +11,7 @@
 | 阶段 | 状态 | 进度 | 最后更新 |
 |------|------|------|----------|
 | P1: 问题定义 | ✅ | 100% | 2026-03-19 |
-| P2: 文献调研 | 🔄 | 0% | 2026-04-01 |
+| P2: 文献调研 | 🔄 | 60% | 2026-04-02 |
 | P3: 研究空白 | ⏸️ | 0% | - |
 | P4: 方案设计 | ⏸️ | 0% | - |
 | P5: 数据与指标 | ⏸️ | 0% | - |
@@ -33,32 +33,50 @@
 
 ---
 
-## 🔄 P2 - 文献调研（待开始）
+## 🔄 P2 - 文献调研（进行中）
 
 **开始时间**：2026-04-01（深夜自主模式启动）
+**更新时间**：2026-04-02
 
 ### 2.1 文献资源
 
 | 类型 | 数量 | 状态 |
 |------|------|------|
 | PDF 文献 | 60 篇 | ✅ 已下载 |
-| 解读笔记 | 0 篇 | ⏸️ 待解读 |
+| 新论文 | 3 篇 | ⏸️ 2/3 已下载 |
+| 解读笔记 | 5 篇 | ✅ 已完成 |
 
-### 2.2 核心文献（待解读）
+### 2.2 新发现论文
 
-| # | 论文 | 状态 | 优先级 |
-|---|------|------|--------|
-| P01 | LLM as Virtual Survey Respondents | ⏸️ | 🔴 P0 |
-| P02 | Large Language Models as Subpopulation Representative Models | ⏸️ | 🔴 P0 |
-| P03 | LLM Generated Persona is a Promise | ⏸️ | 🔴 P0 |
-| P04 | Fine-tuning LLMs for Human Behavior Prediction | ⏸️ | 🔴 P1 |
-| P05 | Agent-based simulation applications | ⏸️ | 🟡 P2 |
+| 论文 | 来源 | 状态 | 备注 |
+|------|------|------|------|
+| ECLAIR框架 | arXiv 2602.18462 | ✅ 已下载 | 22问题检测LLM，AUC=0.99 |
+| 合成受访者偏差 | arXiv 2603.20229 | ✅ 已下载 | 合成响应低估个体差异 |
+| PNAS威胁研究 | PNAS DOI: 10.1073/pnas.2518075122 | ⏸️ 需手动下载 | LLM对在线调研的威胁 |
 
-### 2.3 待完成
+### 2.3 核心文献（已解读）
 
-- [ ] 深度解读核心文献（P01-P05）
+| # | 论文 | 状态 | 优先级 | 笔记文件 |
+|---|------|------|--------|----------|
+| P01 | LLM as Virtual Survey Respondents | ✅ | 🔴 P0 | P01-LLM-as-Virtual-Survey-Respondents.md |
+| P02 | Large Language Models as Subpopulation Representative Models | ✅ | 🔴 P0 | P02-LLM-Subpopulation-Representative-Models.md |
+| P03 | LLM Generated Persona is a Promise | ✅ | 🔴 P0 | P03-LLM-Generated-Persona.md |
+| P04 | Fine-tuning LLMs for Human Behavior Prediction | ✅ | 🔴 P1 | P04-Fine-tuning-LLMs-Human-Behavior.md |
+| P05 | Agent-based simulation applications | ✅ | 🟡 P2 | P05-Agent-based-Simulation.md |
+
+### 2.4 已完成
+
+- [x] 下载新发现论文（2/3成功）
+- [x] 深度解读核心文献（P01-P05）
 - [ ] 形成技术方法总结
 - [ ] 识别研究空白
+
+### 2.5 进度评估
+
+- **P2整体进度**: 60%
+- **文献下载**: 95% (59/60 PDF + 2/3新论文)
+- **文献解读**: 100% (5/5核心文献)
+- **技术总结**: 待开始
 
 ---
 
@@ -94,6 +112,12 @@ virtual-users/
 ---
 
 ## 📝 更新日志
+
+### 2026-04-02 (P2文献调研启动)
+- ✅ 下载新发现论文 2/3 (ECLAIR框架 + 合成受访者偏差)
+- ✅ 完成核心文献深度解读 (P01-P05)
+- ✅ 创建5篇文献解读笔记
+- 📊 P2进度更新至60%
 
 ### 2026-04-01 (深夜自主模式)
 - 🔍 发现项目停滞 12 天
